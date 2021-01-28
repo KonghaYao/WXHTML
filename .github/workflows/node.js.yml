@@ -20,8 +20,11 @@ jobs:
     - run: |
         npm install 
         node index.js
-    - name: Run a one-line script
-      run: ls
+    - name: 查看文件
+      run: |
+        ls
+        cd dist
+        ls
 
     - name: 上传文件
       uses: actions/upload-artifact@v2.1.3
