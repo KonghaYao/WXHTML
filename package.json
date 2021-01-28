@@ -1,0 +1,11 @@
+{
+  "name": "WXHTML",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/KonghaYao/WXHTML.git",
+  "author": "KonghaYao <20192831006@m.scnu.edu.cn>",
+  "license": "MIT",
+  "dependencies": {
+    "fetch-node": "^0.0.1"
+  }
+}
