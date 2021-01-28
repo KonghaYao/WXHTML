@@ -18,7 +18,6 @@ jobs:
       with:
         node-version: 12.x
     - run: |
-        npm audit fix --force
         npm install 
         node index.js
     - name: Run a one-line script
@@ -27,4 +26,5 @@ jobs:
     - name: 上传文件
       uses: actions/upload-artifact@v2.1.3
       with:
-        path: file.html
+        name: dist
+        path: dist
