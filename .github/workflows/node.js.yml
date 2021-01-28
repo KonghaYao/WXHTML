@@ -23,5 +23,6 @@ jobs:
       with:
         node-version: 12.x
     - run: |
-        npm install 
+        npm install node-fetch
+        npm install fe-extra
         node index.js
