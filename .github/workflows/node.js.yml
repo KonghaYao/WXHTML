@@ -17,11 +17,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - run: npm install 
-
-    - name: 执行爬虫文件
-    - run: node index.js
-
+    - run: |
+        npm install 
+        node index.js
     - name: 查看文件
       run: |
         ls
