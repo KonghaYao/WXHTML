@@ -6,7 +6,8 @@
   "author": "KonghaYao <20192831006@m.scnu.edu.cn>",
   "license": "MIT",
   "dependencies": {
-    "fetch-node": "^0.0.1",
+    "cheerio": "^1.0.0-rc.5",
+    "fetch-node": "0.0.1",
     "fs-extra": "^9.1.0"
   }
 }
