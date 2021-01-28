@@ -21,3 +21,9 @@ jobs:
         npm audit fix --force
         npm install 
         node index.js
+
+    - name: Upload result
+      uses: actions/upload-artifact@v1
+      with:
+        name: file.html
+        path: file.html
