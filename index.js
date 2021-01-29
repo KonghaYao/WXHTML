@@ -1,4 +1,5 @@
 const fetch = require("node-fetch");
+const parser = require("fast-xml-parser");
 const AV = require("leancloud-storage");
 AV.init({
     appId: "0ER6ub3jKGsff0bDnvcE3InS-gzGzoHsz",
@@ -19,7 +20,7 @@ websites.forEach((i) => {
             const todo = new RSS();
             todo.set("name", i.name);
             todo.set("fromWebsite", i.url);
-            todo.set("content", content);
+            todo.set("content", parser.parse(content));
             // 将对象保存到云端
             todo.save().then(
                 (todo) => {
