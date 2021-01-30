@@ -20,7 +20,7 @@ websites.forEach((i) => {
             const todo = new RSS();
             todo.set("name", i.name);
             todo.set("fromWebsite", i.url);
-            todo.set("content", parser.parse(content));
+            todo.set("content", JSON.stringify(parser.parse(content)));
             // 将对象保存到云端
             todo.save().then(
                 (todo) => {
