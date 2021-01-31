@@ -25,14 +25,16 @@ function rss2(result, { belongToChannels }) {
     let array = result.rss.channel.item.map((i) => {
         let { author, description, link, pubDate = new Date(), title } = i;
 
-        return Creator("RSS", {
-            author,
-            content: description,
+        return Creator("Articles", {
+            author: new AV.Object.createWithoutData("User", "60135d5ebabf3847ced4559c"), //默认用户
+            content: "author:" + author + " " + description,
             link,
             belongToChannels: [belongToChannels],
             pubDate: new Date(pubDate),
             title,
+            isADraft: false,
             decodeType: "html",
+            from: "RSS",
         });
     });
     AV.Object.saveAll(array);
