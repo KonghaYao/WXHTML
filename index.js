@@ -6,7 +6,7 @@ AV.init({
     appKey: "U017BnxwoBNCxk0ls4Rxyzhl",
     serverURL: "https://0er6ub3j.lc-cn-n1-shared.com/",
 });
-var { username, password } = process.argv;
+var [, , username, password] = process.argv;
 const websites = [
     {
         name: "P站",
