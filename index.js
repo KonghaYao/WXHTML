@@ -16,23 +16,22 @@ const websites = [
 AV.User.logIn(username, password).then(
     function () {
         console.log("登录成功");
+        websites.forEach((i) => {
+            fetch(i.url)
+                .then((res) => res.text())
+                .then((content) => {
+                    rss2(parser.parse(content), { belongToChannels: "60166c9ebabf3847ced8d0c2" });
 
-        return AV.User.current();
+                    console.log("保存完成");
+                });
+        });
     },
     function (error) {
         alert(JSON.stringify(error));
         return false;
     }
 );
-websites.forEach((i) => {
-    fetch(i.url)
-        .then((res) => res.text())
-        .then((content) => {
-            rss2(parser.parse(content), { belongToChannels: "60166c9ebabf3847ced8d0c2" });
 
-            console.log("保存完成");
-        });
-});
 function rss2(result, { belongToChannels }) {
     let array = result.rss.channel.item.map((i) => {
         let { author, description, link, pubDate = new Date(), title } = i;
