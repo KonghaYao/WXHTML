@@ -6,12 +6,24 @@ AV.init({
     appKey: "U017BnxwoBNCxk0ls4Rxyzhl",
     serverURL: "https://0er6ub3j.lc-cn-n1-shared.com/",
 });
+var { username, password } = process.argv;
 const websites = [
     {
         name: "P站",
         url: "https://rsshub.app/pixiv/ranking/week",
     },
 ];
+AV.User.logIn(username, password).then(
+    function () {
+        console.log("登录成功");
+
+        return AV.User.current();
+    },
+    function (error) {
+        alert(JSON.stringify(error));
+        return false;
+    }
+);
 websites.forEach((i) => {
     fetch(i.url)
         .then((res) => res.text())
