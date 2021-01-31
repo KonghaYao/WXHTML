@@ -16,21 +16,35 @@ websites.forEach((i) => {
     fetch(i.url)
         .then((res) => res.text())
         .then((content) => {
-            const RSS = AV.Object.extend("RSS");
-            const todo = new RSS();
-            todo.set("name", i.name);
-            todo.set("fromWebsite", i.url);
-            todo.set("content", JSON.stringify(parser.parse(content)));
-            // 将对象保存到云端
-            todo.save().then(
-                (todo) => {
-                    // 成功保存之后，执行其他逻辑
-                    console.log(`保存成功。objectId：${todo.id}`);
-                },
-                (error) => {
-                    console.log("错误");
-                }
-            );
+            rss2(parser.parse(content), { belongToChannels: "60166c9ebabf3847ced8d0c2" });
+
             console.log("保存完成");
         });
 });
+function rss2(result, { belongToChannels }) {
+    let array = result.rss.channel.item.map((i) => {
+        let { author, description, link, pubDate = new Date(), title } = i;
+
+        return Creator("RSS", {
+            author,
+            content: description,
+            link,
+            belongToChannels: [belongToChannels],
+            pubDate: new Date(pubDate),
+            title,
+            decodeType: "html",
+        });
+    });
+    AV.Object.saveAll(array);
+}
+
+function Creator(where, what) {
+    //创建一个数据库对象实例
+    const Pos = AV.Object.extend(where);
+    const pos = new Pos();
+    Object.entries(what).forEach(([key, val]) => {
+        pos.set(key, val);
+    });
+    // 将对象保存到云端
+    return pos;
+}
