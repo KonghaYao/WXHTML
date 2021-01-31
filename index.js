@@ -35,9 +35,9 @@ AV.User.logIn(username, password).then(
 function rss2(result, { belongToChannels }) {
     let array = result.rss.channel.item.map((i) => {
         let { author, description, link, pubDate = new Date(), title } = i;
-
+        let UserID = "60135d5ebabf3847ced4559c";
         return Creator("Articles", {
-            author: new AV.Object.createWithoutData("User", "60135d5ebabf3847ced4559c"), //默认用户
+            author: new AV.Object.createWithoutData("User", UserID), //默认用户
             content: "author:" + author + " " + description,
             link,
             belongToChannels: [belongToChannels],
@@ -46,6 +46,7 @@ function rss2(result, { belongToChannels }) {
             isADraft: false,
             decodeType: "html",
             from: "RSS",
+            MarkID: `${UserID}/${title}/${link}`,
         });
     });
     AV.Object.saveAll(array);
