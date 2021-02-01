@@ -55,6 +55,7 @@ function rss2(result, { belongToChannels }) {
             belongToChannels: [belongToChannels],
             pubDate: new Date(pubDate),
             title,
+            description: description.slice(0, 100),
             isADraft: false,
             decodeType: "html",
             from: "RSS",
