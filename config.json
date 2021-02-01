@@ -1,0 +1,32 @@
+[
+    {
+        "name": "P站",
+        "url": "https://rsshub.app/pixiv/ranking/week",
+        "belongToChannels": "60166c9ebabf3847ced8d0c2"
+    },
+    {
+        "name": "少数派",
+        "url": "https://sspai.com/feed",
+        "belongToChannels": "60174b75babf3847ced921b9"
+    },
+    {
+        "name": "月光博客",
+        "url": "http://feed.williamlong.info/",
+        "belongToChannels": "60174b8dbabf3847ced921be"
+    },
+    {
+        "name": "知乎每日精选",
+        "url": "https://www.zhihu.com/rss",
+        "belongToChannels": "60174bafbabf3847ced921c3"
+    },
+    {
+        "name": "站酷",
+        "url": "${host}/zcool/recommend/all",
+        "belongToChannels": "60174bc5d04ad5371169c8ff"
+    },{
+        "name": "NGA 原神板块",
+        "url": "${host}/nga/forum/650",
+        "belongToChannels": "60174eefbabf3847ced92211"
+      
+    }
+]

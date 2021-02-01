@@ -1,55 +1,63 @@
 const fetch = require("node-fetch");
 const parser = require("fast-xml-parser");
+const fs = require("fs");
 const AV = require("leancloud-storage");
+var crypto = require("crypto");
+
 AV.init({
     appId: "0ER6ub3jKGsff0bDnvcE3InS-gzGzoHsz",
     appKey: "U017BnxwoBNCxk0ls4Rxyzhl",
     serverURL: "https://0er6ub3j.lc-cn-n1-shared.com/",
 });
+// 获取配置文件
 var [, , username, password] = process.argv;
-const websites = [
-    {
-        name: "P站",
-        url: "https://rsshub.app/pixiv/ranking/week",
-    },
-];
+const websites = JSON.parse(fs.readFileSync("./config.json", "utf-8"));
+let hosts = JSON.parse(fs.readFileSync("./hosts.json", "utf-8"));
+
+// 登录并开始爬虫
 AV.User.logIn(username, password).then(
-    function () {
+    async function () {
         console.log("登录成功");
-        websites.forEach((i) => {
-            fetch(i.url)
+        let promiseList = websites.map((i) => {
+            fetch(i.url.replace("${host}", hosts[0]))
                 .then((res) => res.text())
                 .then((content) => {
-                    rss2(parser.parse(content), { belongToChannels: "60166c9ebabf3847ced8d0c2" });
-
-                    console.log("保存完成");
+                    return rss2(parser.parse(content), { belongToChannels: i.belongToChannels });
+                })
+                .catch((err) => {
+                    console.log("error:" + i.name);
+                    console.log(err);
+                    return null;
                 });
         });
+        let Objs = await Promise.all(promiseList);
+        AV.Object.saveAll(Objs.flat().filter((i) => i));
     },
     function (error) {
-        alert(JSON.stringify(error));
+        console.log(error);
         return false;
     }
 );
 
 function rss2(result, { belongToChannels }) {
-    let array = result.rss.channel.item.map((i) => {
-        let { author, description, link, pubDate = new Date(), title } = i;
+    return result.rss.channel.item.map((i) => {
+        let { author, description, link, pubDate = new Date(), title, category = [] } = i;
         let UserID = "60135d5ebabf3847ced4559c";
         return Creator("Articles", {
             author: new AV.Object.createWithoutData("User", UserID), //默认用户
-            content: "author:" + author + " " + description,
+            authorName: author, //创作者的名字
+            content: description,
             link,
+            category,
             belongToChannels: [belongToChannels],
             pubDate: new Date(pubDate),
             title,
             isADraft: false,
             decodeType: "html",
             from: "RSS",
-            MarkID: `${UserID}/${title}/${link}`,
+            MarkID: crypto.createHash("md5").update(`${UserID}/${title}/${link}`).digest("hex"),
         });
     });
-    AV.Object.saveAll(array);
 }
 
 function Creator(where, what) {
@@ -59,6 +67,6 @@ function Creator(where, what) {
     Object.entries(what).forEach(([key, val]) => {
         pos.set(key, val);
     });
-    // 将对象保存到云端
+    // 将对象返回
     return pos;
 }
