@@ -13,13 +13,13 @@ AV.init({
 var [, , username, password] = process.argv;
 const websites = JSON.parse(fs.readFileSync("./config.json", "utf-8"));
 let hosts = JSON.parse(fs.readFileSync("./hosts.json", "utf-8"));
-
+let apiKey = "kgxgevcziqw6p7vustmn9l1jyo4pgternvayg9in";
 // 登录并开始爬虫
 AV.User.logIn(username, password).then(
     async function () {
         console.log("登录成功");
         let promiseList = websites.map((i) => {
-            return fetch("https://api.rss2json.com/v1/api.json?count=100&rss_url=" + i.url.replace("${host}", hosts[0]))
+            return fetch(`https://api.rss2json.com/v1/api.json?order_by=pubDate&api_key=${apiKey}&count=100&rss_url=` + i.url.replace("${host}", hosts[0]))
                 .then((res) => res.text())
                 .then((content) => {
                     console.log(i.name + "爬取完成");
@@ -44,7 +44,7 @@ AV.User.logIn(username, password).then(
 
 function rss2(result, { belongToChannels }) {
     return result.items.map((i) => {
-        let { author, description, link, pubDate = new Date(), title, category = [], thumbnail = "" } = i;
+        let { author, description, link, pubDate = new Date(), title, enclosure, category = [], thumbnail = "" } = i;
         let UserID = "60135d5ebabf3847ced4559c";
         return Creator("Articles", {
             author: new AV.Object.createWithoutData("User", UserID), //默认用户
@@ -55,6 +55,7 @@ function rss2(result, { belongToChannels }) {
             belongToChannels: [belongToChannels],
             pubDate: new Date(pubDate),
             title,
+            enclosure,
             BackgroundImg: thumbnail,
             description: description.slice(0, 100),
             isADraft: false,
