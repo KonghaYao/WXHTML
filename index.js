@@ -19,11 +19,11 @@ AV.User.logIn(username, password).then(
     async function () {
         console.log("登录成功");
         let promiseList = websites.map((i) => {
-            fetch(i.url.replace("${host}", hosts[0]))
+            return fetch(i.url.replace("${host}", hosts[0]))
                 .then((res) => res.text())
                 .then((content) => {
                     console.log(i.name + "爬取完成");
-                    return rss2(parser.parse(content), { belongToChannels: i.belongToChannels });
+                    return rss2(parser.parse(content, options), { belongToChannels: i.belongToChannels });
                 })
                 .catch((err) => {
                     console.log("error:" + i.name);
@@ -73,3 +73,13 @@ function Creator(where, what) {
     // 将对象返回
     return pos;
 }
+var options = {
+    ignoreAttributes: true,
+    ignoreNameSpace: false,
+    allowBooleanAttributes: true,
+    parseNodeValue: true,
+    parseAttributeValue: false,
+    trimValues: true,
+    cdataPositionChar: "\\c",
+    parseTrueNumberOnly: false,
+};
