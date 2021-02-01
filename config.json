@@ -34,5 +34,10 @@
         "url": "${host}/coolapk/tuwen",
         "belongToChannels": "60175a54babf3847ced92a17"
       
+    },{
+        "name": "知乎日报",
+        "url": "${host}/zhihu/daily",
+        "belongToChannels": "60175af0babf3847ced92a9a"
+      
     }
 ]
