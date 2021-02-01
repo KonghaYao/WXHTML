@@ -19,7 +19,7 @@ AV.User.logIn(username, password).then(
     async function () {
         console.log("登录成功");
         let promiseList = websites.map((i) => {
-            return fetch(i.url.replace("${host}", hosts[0]))
+            return fetch("https://api.rss2json.com/v1/api.json?count=100&rss_url=" + i.url.replace("${host}", hosts[0]))
                 .then((res) => res.text())
                 .then((content) => {
                     console.log(i.name + "爬取完成");
@@ -43,28 +43,25 @@ AV.User.logIn(username, password).then(
 );
 
 function rss2(result, { belongToChannels }) {
-    return result.rss.channel.item.map((i) => {
-        let { author, description, link, pubDate = new Date(), title, category = [] } = i;
+    return result.items.map((i) => {
+        let { author, description, link, pubDate = new Date(), title, category = [], thumbnail = "" } = i;
         let UserID = "60135d5ebabf3847ced4559c";
-        if (description.length > 150) {
-            return Creator("Articles", {
-                author: new AV.Object.createWithoutData("User", UserID), //默认用户
-                authorName: author, //创作者的名字
-                content: description,
-                link,
-                category,
-                belongToChannels: [belongToChannels],
-                pubDate: new Date(pubDate),
-                title,
-                description: description.slice(0, 100),
-                isADraft: false,
-                decodeType: "html",
-                from: "RSS",
-                MarkID: crypto.createHash("md5").update(`${UserID}/${title}/${link}`).digest("hex"),
-            });
-        } else {
-            return null;
-        }
+        return Creator("Articles", {
+            author: new AV.Object.createWithoutData("User", UserID), //默认用户
+            authorName: author, //创作者的名字
+            content: description,
+            link,
+            category,
+            belongToChannels: [belongToChannels],
+            pubDate: new Date(pubDate),
+            title,
+            BackgroundImg: thumbnail,
+            description: description.slice(0, 100),
+            isADraft: false,
+            decodeType: "html",
+            from: "RSS",
+            MarkID: crypto.createHash("md5").update(`${UserID}/${title}/${link}`).digest("hex"),
+        });
     });
 }
 

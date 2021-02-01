@@ -24,9 +24,15 @@
         "url": "${host}/zcool/recommend/all",
         "belongToChannels": "60174bc5d04ad5371169c8ff"
     },{
-        "name": "NGA 原神板块",
-        "url": "${host}/nga/forum/650",
+        "name": "米游社",
+        "url": "https://rsshub.app/yuanshen",
         "belongToChannels": "60174eefbabf3847ced92211"
+      
+    },
+    {
+        "name": "酷安图文",
+        "url": "${host}/coolapk/tuwen",
+        "belongToChannels": "60175a54babf3847ced92a17"
       
     }
 ]
