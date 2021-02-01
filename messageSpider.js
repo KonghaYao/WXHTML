@@ -9,7 +9,7 @@ const puppeteer = require("puppeteer");
 module.exports = async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let res = await fetch("https://bbs-api.mihoyo.com/post/wapi/userPost?gids=2&size=50&uid=75276557")
+    let res = await fetch("https://bbs-api.mihoyo.com/post/wapi/userPost?gids=2&size=10&uid=75276557")
         .then((res) => res.json())
         .then(async (res) => {
             if (res.message === "OK" && res.data.list.length) {
