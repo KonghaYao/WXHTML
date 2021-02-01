@@ -46,21 +46,25 @@ function rss2(result, { belongToChannels }) {
     return result.rss.channel.item.map((i) => {
         let { author, description, link, pubDate = new Date(), title, category = [] } = i;
         let UserID = "60135d5ebabf3847ced4559c";
-        return Creator("Articles", {
-            author: new AV.Object.createWithoutData("User", UserID), //默认用户
-            authorName: author, //创作者的名字
-            content: description,
-            link,
-            category,
-            belongToChannels: [belongToChannels],
-            pubDate: new Date(pubDate),
-            title,
-            description: description.slice(0, 100),
-            isADraft: false,
-            decodeType: "html",
-            from: "RSS",
-            MarkID: crypto.createHash("md5").update(`${UserID}/${title}/${link}`).digest("hex"),
-        });
+        if (description.length > 150) {
+            return Creator("Articles", {
+                author: new AV.Object.createWithoutData("User", UserID), //默认用户
+                authorName: author, //创作者的名字
+                content: description,
+                link,
+                category,
+                belongToChannels: [belongToChannels],
+                pubDate: new Date(pubDate),
+                title,
+                description: description.slice(0, 100),
+                isADraft: false,
+                decodeType: "html",
+                from: "RSS",
+                MarkID: crypto.createHash("md5").update(`${UserID}/${title}/${link}`).digest("hex"),
+            });
+        } else {
+            return null;
+        }
     });
 }
 
