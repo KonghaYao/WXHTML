@@ -20,7 +20,7 @@ module.exports = async () => {
                         let title = res.data.list[i].post.subject;
                         let BackgroundImg = res.data.list[i].post.image;
                         let pubDate = res.data.list[i].post.created_at;
-                        let link = "https://bbs.mihoyo.com/ys/article/" + res.data.list[i]["post_id"];
+                        let link = "https://bbs.mihoyo.com/ys/article/" + res.data.list[i].post["post_id"];
 
                         await page.goto(link, { waitUntil: "networkidle2" });
                         console.log("转向");
@@ -32,7 +32,7 @@ module.exports = async () => {
                             link,
                             category: [],
                             belongToChannels: [belongToChannels],
-                            pubDate,
+                            pubDate: new Date(pubDate),
                             title,
                             enclosure: {},
                             BackgroundImg,
@@ -58,5 +58,5 @@ module.exports = async () => {
         });
 
     await browser.close();
-    return res;
+    return res.filter((i) => i);
 };
