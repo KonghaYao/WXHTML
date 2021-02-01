@@ -22,6 +22,7 @@ AV.User.logIn(username, password).then(
             fetch(i.url.replace("${host}", hosts[0]))
                 .then((res) => res.text())
                 .then((content) => {
+                    console.log(i.name + "爬取完成");
                     return rss2(parser.parse(content), { belongToChannels: i.belongToChannels });
                 })
                 .catch((err) => {
@@ -31,7 +32,9 @@ AV.User.logIn(username, password).then(
                 });
         });
         let Objs = await Promise.all(promiseList);
-        AV.Object.saveAll(Objs.flat().filter((i) => i));
+        AV.Object.saveAll(Objs.flat().filter((i) => i)).then((result) => {
+            console.log("上传完成");
+        });
     },
     function (error) {
         console.log(error);
