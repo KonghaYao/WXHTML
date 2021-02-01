@@ -43,7 +43,7 @@ AV.User.logIn(username, password).then(
 
 function rss2(result, { belongToChannels }) {
     return result.items.map((i) => {
-        let { author, description, link, pubDate = new Date(), title, enclosure, category = [], thumbnail = "" } = i;
+        let { author, description, link, pubDate = new Date(), title, enclosure = [], category = [], thumbnail = "" } = i;
         let UserID = "60135d5ebabf3847ced4559c";
         return Creator("Articles", {
             author: new AV.Object.createWithoutData("User", UserID), //默认用户
