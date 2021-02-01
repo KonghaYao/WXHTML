@@ -16,15 +16,11 @@ module.exports = async () => {
                 let PromiseList = [];
                 for (let i = 0; i < res.data.list.length; i++) {
                     try {
-                        let {
-                            User: { nickname: author },
-                            post: {
-                                subject: title,
-                                image: [BackgroundImg],
-                            },
-                            postID,
-                        } = res.data.list[i];
-                        let link = "https://bbs.mihoyo.com/ys/article/" + postID;
+                        let author = res.data.list[i].User.nickname;
+                        let title = res.data.list[i].post.subject;
+                        let BackgroundImg = res.data.list[i].post.image;
+                        let pubDate = res.data.list[i].post.created_at;
+                        let link = "https://bbs.mihoyo.com/ys/article/" + res.data.list[i]["post_id"];
 
                         await page.goto(link, { waitUntil: "networkidle2" });
                         console.log("转向");
@@ -36,11 +32,11 @@ module.exports = async () => {
                             link,
                             category: [],
                             belongToChannels: [belongToChannels],
-                            pubDate: new Date(pubDate),
+                            pubDate,
                             title,
                             enclosure: {},
                             BackgroundImg,
-                            description: description.slice(0, 100),
+                            description: res.data.list[i].post.content,
                             isADraft: false,
                             decodeType: "html",
                             from: "RSS",
@@ -48,7 +44,7 @@ module.exports = async () => {
                         };
                         PromiseList.push(result);
                     } catch (e) {
-                        console.log("二段爬取错误一个");
+                        console.log("二段爬取错误一个", e);
                     }
                 }
 
@@ -60,6 +56,7 @@ module.exports = async () => {
         .catch((err) => {
             console.log("错误");
         });
-    saveMessage(res);
+
     await browser.close();
+    return res;
 };
