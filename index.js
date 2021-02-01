@@ -24,8 +24,8 @@ var [, , username, password] = process.argv;
 const rssfetch = require("./rssfetch.js");
 const messageSpider = require("./messageSpider.js");
 AV.User.logIn(username, password).then(async () => {
-    // let rss = await rssfetch();
-    // saveMessage("Articles", rss);
-    let mihayou = await messageSpider();
-    saveMessage("Articles", mihayou);
+    let rss = await rssfetch();
+    saveMessage("Articles", rss);
+    // let mihayou = await messageSpider();
+    // saveMessage("Articles", mihayou);
 });
