@@ -16,7 +16,7 @@ module.exports = async () => {
                 let PromiseList = [];
                 for (let i = 0; i < res.data.list.length; i++) {
                     try {
-                        let author = res.data.list[i].User.nickname;
+                        let author = res.data.list[i].user.nickname;
                         let title = res.data.list[i].post.subject;
                         let BackgroundImg = res.data.list[i].post.image;
                         let pubDate = res.data.list[i].post.created_at;
