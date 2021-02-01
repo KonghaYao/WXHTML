@@ -13,6 +13,7 @@ var [, , username, password] = process.argv;
 const websites = JSON.parse(fs.readFileSync("./config.json", "utf-8"));
 let hosts = JSON.parse(fs.readFileSync("./hosts.json", "utf-8"));
 let apiKey = "kgxgevcziqw6p7vustmn9l1jyo4pgternvayg9in";
+
 // 登录并开始爬虫
 AV.User.logIn(username, password).then(
     async function () {

@@ -39,5 +39,9 @@
         "url": "${host}/zhihu/daily",
         "belongToChannels": "60175af0babf3847ced92a9a"
       
+    },{
+        "name": "知乎日报",
+        "url": "${host}/zhihu/hotlist",
+        "belongToChannels": "60175fd3babf3847ced92cc9"
     }
 ]
