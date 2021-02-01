@@ -23,11 +23,6 @@
         "name": "站酷",
         "url": "${host}/zcool/recommend/all",
         "belongToChannels": "60174bc5d04ad5371169c8ff"
-    },{
-        "name": "米游社",
-        "url": "https://rsshub.app/yuanshen",
-        "belongToChannels": "60174eefbabf3847ced92211"
-      
     },
     {
         "name": "酷安图文",
