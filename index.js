@@ -1,5 +1,4 @@
 const fetch = require("node-fetch");
-const parser = require("fast-xml-parser");
 const fs = require("fs");
 const AV = require("leancloud-storage");
 var crypto = require("crypto");
@@ -23,7 +22,7 @@ AV.User.logIn(username, password).then(
                 .then((res) => res.text())
                 .then((content) => {
                     console.log(i.name + "爬取完成");
-                    return rss2(parser.parse(content, options), { belongToChannels: i.belongToChannels });
+                    return rss2(JSON.parse(content), { belongToChannels: i.belongToChannels });
                 })
                 .catch((err) => {
                     console.log("error:" + i.name);
@@ -76,13 +75,3 @@ function Creator(where, what) {
     // 将对象返回
     return pos;
 }
-var options = {
-    ignoreAttributes: true,
-    ignoreNameSpace: false,
-    allowBooleanAttributes: true,
-    parseNodeValue: true,
-    parseAttributeValue: false,
-    trimValues: true,
-    cdataPositionChar: "\\c",
-    parseTrueNumberOnly: false,
-};
