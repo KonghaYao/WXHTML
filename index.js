@@ -30,7 +30,7 @@ function saveMessage(listName, array) {
             })
             .filter((i) => i);
         console.log(needUpload.length + "个数据被保存");
-        await AV.Object.saveAll(needUpload);
+        return AV.Object.saveAll(needUpload);
     });
 }
 
