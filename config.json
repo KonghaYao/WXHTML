@@ -35,8 +35,9 @@
         "belongToChannels": "60175af0babf3847ced92a9a"
       
     },{
-        "name": "知乎日报",
-        "url": "${host}/zhihu/hotlist",
-        "belongToChannels": "60175fd3babf3847ced92cc9"
+        "name": "Dribbble",
+        "url": "https://rsshub.app/dribbble/popular/week",
+        "belongToChannels": "6018b637babf3847ceda32be"
+      
     }
 ]

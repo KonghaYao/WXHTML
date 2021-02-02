@@ -16,7 +16,22 @@ AV.init({
 });
 
 function saveMessage(listName, array) {
-    AV.Object.saveAll(array.map((i) => Creator(listName, i)));
+    const query = new AV.Query(listName);
+    query.select(["MarkID"]);
+
+    query.find().then((mark) => {
+        let needUpload = array
+            .map((i) => {
+                if (!mark.includes(i.MarkID)) {
+                    return Creator(listName, i);
+                } else {
+                    return null;
+                }
+            })
+            .filter((i) => i);
+        console.log(needUpload.length + "个数据被保存");
+        await AV.Object.saveAll(needUpload);
+    });
 }
 
 var [, , username, password] = process.argv;
