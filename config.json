@@ -39,5 +39,9 @@
         "url": "https://rsshub.app/dribbble/popular/week",
         "belongToChannels": "6018b637babf3847ceda32be"
       
+    },{
+        "name": "HelloGithub",
+        "url": "${host}/posts/1574156384091320",
+        "belongToChannels": "6019483c8f5787459b1fb8c2"
     }
 ]
