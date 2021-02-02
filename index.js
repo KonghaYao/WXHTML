@@ -18,11 +18,13 @@ AV.init({
 function saveMessage(listName, array) {
     const query = new AV.Query(listName);
     query.select(["MarkID"]);
-
+    query.descending("updatedAt");
+    query.limit(1000);
     query.find().then((mark) => {
+        let Mark = mark.map((i) => i.attributes.MarkID);
         let needUpload = array
             .map((i) => {
-                if (!mark.includes(i.MarkID)) {
+                if (!Mark.includes(i.MarkID)) {
                     return Creator(listName, i);
                 } else {
                     return null;
