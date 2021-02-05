@@ -26,10 +26,10 @@ async function list(accessKeyId, accessKeySecret) {
             return !urls.includes(i.url);
         })
         .map((i) => i.name);
-    await deleteMulti(deleteObjects);
+    await deleteMulti(deleteObjects, client);
     console.log(deleteObjects);
 }
-async function deleteMulti(obj) {
+async function deleteMulti(obj, client) {
     try {
         let result = await client.deleteMulti(obj, {
             quiet: true,
