@@ -6,9 +6,8 @@
   "author": "KonghaYao <20192831006@m.scnu.edu.cn>",
   "license": "MIT",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.5",
+    "ali-oss": "^6.13.2",
     "leancloud-storage": "^4.10.0",
-    "node-fetch": "^2.6.1",
-    "puppeteer": "^5.5.0"
+    "node-fetch": "^2.6.1"
   }
 }

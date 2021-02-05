@@ -23,4 +23,4 @@ jobs:
         node-version: 12.x
     - run: |
         npm install 
-        node index.js github ${{secrets.LEANCLOUDGITHUB}}
+        node index.js github ${{secrets.LEANCLOUDGITHUB}} ${{secrets.APPID}} ${{secrets.APPKEY}} ${{secrets.SERVERURL}} ${{secrets.OSSID}} ${{secrets.OSSKEY}}

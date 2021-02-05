@@ -9,11 +9,6 @@ function Creator(where, what) {
     // 将对象返回
     return pos;
 }
-AV.init({
-    appId: "0ER6ub3jKGsff0bDnvcE3InS-gzGzoHsz",
-    appKey: "U017BnxwoBNCxk0ls4Rxyzhl",
-    serverURL: "https://0er6ub3j.lc-cn-n1-shared.com/",
-});
 
 function saveMessage(listName, array) {
     const query = new AV.Query(listName);
@@ -36,13 +31,19 @@ function saveMessage(listName, array) {
     });
 }
 
-var [, , username, password] = process.argv;
+var [, , username, password, appId, appKey, serverURL, ossid, osskey] = process.argv;
 
+AV.init({
+    appId,
+    appKey,
+    serverURL,
+});
 const rssfetch = require("./rssfetch.js");
-const messageSpider = require("./messageSpider.js");
+const oss = require("./oss-node.js");
 AV.User.logIn(username, password).then(async () => {
     let rss = await rssfetch();
     saveMessage("Articles", rss);
+    oss(ossid, osskey);
     // let mihayou = await messageSpider();
     // saveMessage("Articles", mihayou);
 });
