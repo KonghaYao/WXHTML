@@ -11,10 +11,10 @@ async function main() {
     console.log("登录成功");
     let promiseList = websites.map((i) => {
         return fetch(`https://api.rss2json.com/v1/api.json?order_by=pubDate&api_key=${apiKey}&count=100&rss_url=` + i.url.replace("${host}", hosts[0]))
-            .then((res) => res.text())
+            .then((res) => res.json())
             .then((content) => {
                 console.log(i.name + "爬取完成");
-                return rss2(JSON.parse(content), { belongToChannels: i.belongToChannels });
+                return rss2(content, { belongToChannels: i.belongToChannels });
             })
             .catch((err) => {
                 console.log("error:" + i.name);
